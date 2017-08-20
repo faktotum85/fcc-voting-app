@@ -2,18 +2,14 @@
   Create a new poll
 </h1>
 
-<form action="/save-new-poll">
+<form action="/api/save-new-poll" method="post">
   <strong>Question text</strong><br />
-  <input type="text" name="question"/><br />
+  <input type="text" name="question" required/>
 
-  <div id="answerOptions">
-    <strong>Answer option 1</strong><br />
-    <input type="text" name="answer1"><br />
-    <strong>Answer option 2</strong><br />
-    <input type="text" name="answer2"><br />
-  </div>
+  <strong>Options (separated by line)</strong><br />
+  <textarea name="options" rows="5" required></textarea>
 
-  <button type="submit" name="submit">Get answers!</button>
+  <button type="submit">Get answers!</button>
 </form>
 
 <script src="/js/newPoll.js"></script>
