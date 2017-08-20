@@ -1,0 +1,49 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: #4B88A2;
+}
+
+header > nav {
+  height: 50px;
+}
+
+nav > ul {
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+nav li {
+  height: 30px;
+  width: 100px;
+  text-align: center;
+  line-height: 30px;
+  display: inline;
+  margin-right: 20px;
+  color: white;
+}
+
+nav li.active {
+  background-color: white;
+  color: #4B88A2;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.wrapper {
+  max-width: 940px;
+  padding: 0 10px 0 10px;
+  margin: auto;
+}

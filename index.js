@@ -8,12 +8,24 @@ mongoose.Promise = global.Promise;
 const port = process.env.PORT || 8080;
 const app = express();
 
+app.use(express.static(__dirname + '/public'));
+
 app.set('view engine', 'ejs');
 app.use(engine);
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.render('index', { title: 'The index page!'});
+  res.render('all-polls', {
+    page_name: 'allPolls',
+    title: 'Voting App!'
+  });
+});
+
+app.get('/new', (req, res) => {
+  res.render('new-poll', {
+    page_name: 'newPoll',
+    title: 'Voting App!'
+  });
 });
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/votingapp', {
