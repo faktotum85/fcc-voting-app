@@ -17,14 +17,14 @@ app.use(morgan('dev'));
 app.get('/', (req, res) => {
   res.render('all-polls', {
     page_name: 'allPolls',
-    title: 'Voting App!'
+    title: 'All polls'
   });
 });
 
 app.get('/new', (req, res) => {
   res.render('new-poll', {
     page_name: 'newPoll',
-    title: 'Voting App!'
+    title: 'Create a new poll'
   });
 });
 

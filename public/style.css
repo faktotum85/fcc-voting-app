@@ -8,7 +8,7 @@ header {
 }
 
 header > nav {
-  height: 50px;
+  height: 60px;
 }
 
 nav > ul {
@@ -21,10 +21,10 @@ nav > ul {
 }
 
 nav li {
-  height: 30px;
+  height: 40px;
   width: 100px;
   text-align: center;
-  line-height: 30px;
+  line-height: 40px;
   display: inline;
   margin-right: 20px;
   color: white;
