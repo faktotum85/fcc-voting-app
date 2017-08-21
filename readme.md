@@ -1,9 +1,5 @@
 todos:
-- create page template for individual polls
-
-- redirect to that page when a new poll is created
-- link to individual polls on list of polls
-
 - expand model to allow for votes
+- build out page template for individual polls
 
 - add user model and authentication

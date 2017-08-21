@@ -1,6 +1,10 @@
 <h1>Here are all the questions:</h1>
 <ul>
   <% questions.forEach(function(question) { %>
-    <li><%=question.question%></li>
+    <li>
+      <a href=<%= '/poll/' + question['_id'] %>>
+        <%=question.question%>
+      </a>
+    </li>
   <% }) %>
 </ul>

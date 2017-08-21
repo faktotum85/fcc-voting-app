@@ -2,6 +2,30 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/question.js');
 
+router.get('/poll/:pollId', (req, res) => {
+
+  if (!req.params.pollId.match(/^[0-9a-f]{24}$/i)) {
+    // invalid id
+    return res.sendStatus(404);
+  }
+
+  Question.findOne({'_id': req.params.pollId}).exec((err, poll) => {
+    if (err) {
+      console.error(err);
+      return res.sendStatus(500);
+    };
+    if (poll === null) { // no result
+      return res.sendStatus(404);
+    }
+    console.log(poll);
+    res.render('single-poll', {
+      page_name: 'singlePoll',
+      title: poll.question,
+      poll: poll
+    });
+  });
+});
+
 router.get('/', (req, res) => {
 
   Question.find().exec((err, questions) => {
@@ -21,7 +45,7 @@ router.get('/new', (req, res) => {
   });
 });
 
-router.post('/save-new-poll', (req, res) => {
+router.post('/api/save-new-poll', (req, res) => {
   const questionText = req.body.question;
   let options = req.body.options.split('\r\n');
 
@@ -38,11 +62,14 @@ router.post('/save-new-poll', (req, res) => {
   });
 
   question.save(err => {
-    if (err) throw err;
+    if (err) {
+      console.error(err);
+      return res.sendStatus(500);
+    }
   }).then(data => {
     console.log(data);
+    res.redirect('/poll/' + data['_id']);
   });
-  res.redirect('/');
 });
 
 module.exports = router;

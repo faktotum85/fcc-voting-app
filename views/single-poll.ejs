@@ -1,0 +1,8 @@
+<h1><%= poll.question %></h1>
+<ul>
+  <% poll.options.forEach(option => { %>
+    <li>
+      <%= option %>
+    </li>
+  <% }) %>
+</ul>
