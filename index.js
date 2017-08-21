@@ -18,7 +18,6 @@ app.use(morgan('dev'));
 
 // ROUTES
 app.use('/', require('./app/routes/router'));
-app.use('/api/', require('./app/routes/api'));
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/votingapp', {
   useMongoClient: true
