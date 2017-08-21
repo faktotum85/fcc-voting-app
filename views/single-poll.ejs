@@ -2,7 +2,18 @@
 <ul>
   <% poll.options.forEach(option => { %>
     <li>
-      <%= option %>
+      <%= option.label %>: <%=option.votes %> vote<% if(option.votes !== 1) { %>s<% } %>
     </li>
   <% }) %>
 </ul>
+
+<form action="<%= '/api/poll/' + poll['_id'] %>" method="post">
+  <select name="option">
+    <% poll.options.forEach(option => { %>
+      <option value="<%= option['_id'] %>">
+        <%= option.label %>
+      </option>
+    <% }) %>
+  </select>
+  <button>Vote now!</button>
+</form>

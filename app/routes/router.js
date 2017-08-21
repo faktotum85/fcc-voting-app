@@ -2,29 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/question.js');
 
-router.get('/poll/:pollId', (req, res) => {
-
-  if (!req.params.pollId.match(/^[0-9a-f]{24}$/i)) {
-    // invalid id
-    return res.sendStatus(404);
-  }
-
-  Question.findOne({'_id': req.params.pollId}).exec((err, poll) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    };
-    if (poll === null) { // no result
-      return res.sendStatus(404);
-    }
-    console.log(poll);
-    res.render('single-poll', {
-      page_name: 'singlePoll',
-      title: poll.question,
-      poll: poll
-    });
-  });
-});
+// GET ROUTES
 
 router.get('/', (req, res) => {
 
@@ -45,6 +23,31 @@ router.get('/new', (req, res) => {
   });
 });
 
+router.get('/poll/:pollId', (req, res) => {
+  const pollId = req.params.pollId;
+
+  if (!validId(pollId)) {
+    return res.sendStatus(404);
+  }
+
+  Question.findOne({'_id': pollId}).exec((err, poll) => {
+    if (err) {
+      console.error(err);
+      return res.sendStatus(500);
+    };
+    if (poll === null) { // no result
+      return res.sendStatus(404);
+    }
+    res.render('single-poll', {
+      page_name: 'singlePoll',
+      title: poll.question,
+      poll: poll
+    });
+  });
+});
+
+// POST ROUTES
+
 router.post('/api/save-new-poll', (req, res) => {
   const questionText = req.body.question;
   let options = req.body.options.split('\r\n');
@@ -58,7 +61,11 @@ router.post('/api/save-new-poll', (req, res) => {
 
   const question = new Question({
     question: questionText,
-    options: options
+    options: options.map(label => {
+      return {
+        label: label
+      }
+    })
   });
 
   question.save(err => {
@@ -71,5 +78,37 @@ router.post('/api/save-new-poll', (req, res) => {
     res.redirect('/poll/' + data['_id']);
   });
 });
+
+router.post('/api/poll/:pollId', (req, res) => {
+  const pollId = req.params.pollId;
+  const optionId = req.body.option;
+
+  if (!validId(pollId) || !validId(optionId)) {
+    return res.sendStatus(404);
+  }
+
+  // Update Poll
+  Question.findOneAndUpdate(
+    { "_id": pollId, "options._id": optionId },
+    {
+        "$inc": {
+            "options.$.votes": 1
+        }
+    },
+    (err) => {
+      if (err) {
+        console.error(err)
+        return res.sendStatus(500);
+      }
+    }
+  );
+
+  console.log('voted for', optionId);
+  res.redirect('/poll/' + pollId);
+});
+
+function validId(pollId) {
+  return pollId.match(/^[0-9a-f]{24}$/i);
+}
 
 module.exports = router;

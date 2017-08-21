@@ -2,7 +2,7 @@
 <ul>
   <% questions.forEach(function(question) { %>
     <li>
-      <a href=<%= '/poll/' + question['_id'] %>>
+      <a href="<%= '/poll/' + question['_id'] %>">
         <%=question.question%>
       </a>
     </li>
