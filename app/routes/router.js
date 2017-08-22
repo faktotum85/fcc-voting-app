@@ -6,13 +6,27 @@ const Question = require('../models/question.js');
 
 module.exports = function(passport) {
   router.get('/', (req, res) => {
-    console.log(req.user);
 
     Question.find().exec((err, questions) => {
       if (err) return res.end();
-      res.render('all-polls', {
+      res.render('poll-list', {
         page_name: 'allPolls',
         title: 'All polls',
+        questions: questions,
+        user: req.user
+      });
+    });
+  });
+
+  router.get('/dashboard', isLoggedIn, (req, res) => {
+
+    Question.find({
+      author: req.user._id
+    }).exec((err, questions) => {
+      if (err) return res.end();
+      res.render('poll-list', {
+        page_name: 'myPolls',
+        title: 'My polls',
         questions: questions,
         user: req.user
       });

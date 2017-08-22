@@ -28,7 +28,8 @@ nav > ul.pull-right {
 
 nav li {
   height: 40px;
-  width: 100px;
+  max-width: 100px;
+  padding: 0 10px;
   text-align: center;
   line-height: 40px;
   display: inline;
@@ -38,6 +39,12 @@ nav li {
 
 ul.pull-right > li {
   margin: auto 0 auto 20px;
+}
+
+@media (max-width: 500px) {
+  nav li {
+    margin: 0;
+  }
 }
 
 nav li.active {
