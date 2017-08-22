@@ -7,7 +7,7 @@
   <% }) %>
 </ul>
 
-<form action="<%= '/api/poll/' + poll['_id'] %>" method="post">
+<form action="<%= '/api/vote/' + poll['_id'] %>" method="post">
   <select name="option">
     <% poll.options.forEach(option => { %>
       <option value="<%= option['_id'] %>">
@@ -15,5 +15,11 @@
       </option>
     <% }) %>
   </select>
-  <button>Vote now!</button>
+  <button type="submit">Vote now!</button>
 </form>
+
+<% if(user && user._id.equals(poll.author)) { %>
+  <form action="<%= '/api/delete/' + poll['_id'] %>" method="post">
+    <button class="danger" type="submit" name="delete">Delete this poll</button>
+  </form>
+<% } %>

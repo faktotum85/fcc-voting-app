@@ -19,7 +19,6 @@ module.exports = function(passport) {
   });
 
   router.get('/dashboard', isLoggedIn, (req, res) => {
-
     Question.find({
       author: req.user._id
     }).exec((err, questions) => {
@@ -98,7 +97,7 @@ module.exports = function(passport) {
     });
   });
 
-  router.post('/api/poll/:pollId', (req, res) => {
+  router.post('/api/vote/:pollId', (req, res) => {
     const pollId = req.params.pollId;
     const optionId = req.body.option;
 
@@ -124,6 +123,30 @@ module.exports = function(passport) {
 
     res.redirect('/poll/' + pollId);
   });
+
+  router.post('/api/delete/:pollId', (req, res) => {
+    const pollId = req.params.pollId;
+
+    if (!validId(pollId)) {
+      return res.sendStatus(404);
+    }
+
+    // Delete poll
+    Question.remove(
+      { '_id': pollId,
+        'author': req.user._id
+      },
+      (err) => {
+        if (err) {
+          console.error(err)
+          return res.sendStatus(500);
+        }
+      }
+    );
+
+    res.redirect('/dashboard');
+  });
+
 
   function validId(pollId) {
     return pollId.match(/^[0-9a-f]{24}$/i);
