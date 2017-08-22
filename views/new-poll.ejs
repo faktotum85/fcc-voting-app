@@ -3,10 +3,10 @@
 </h1>
 
 <form action="/api/save-new-poll" method="post">
-  <strong>Question text</strong><br />
+  <label>Question text</label>
   <input type="text" name="question" required/>
 
-  <strong>Options (separated by line)</strong><br />
+  <label>Options (separated by line)</label>
   <textarea name="options" rows="5" required></textarea>
 
   <button type="submit">Get answers!</button>

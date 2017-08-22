@@ -13,6 +13,14 @@
           <li<% if (page_name === 'allPolls') { %> class="active" <% } %>><a href="/">All polls</a></li>
           <li<% if (page_name === 'newPoll') { %> class="active" <% } %>><a href="/new">New poll</a></li>
         </ul>
+        <ul class="pull-right">
+          <% if (user) { %>
+            <li><a href="/users/logout">Logout</a></li>
+          <% } %>
+          <% if (!user) { %>
+            <li><a href="/users/login">Log in/Sign up</a></li>
+          <% } %>
+        </ul>
       </nav>
     </header>
 

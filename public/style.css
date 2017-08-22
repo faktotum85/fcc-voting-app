@@ -9,15 +9,21 @@ header {
 
 header > nav {
   height: 60px;
+  display: flex;
 }
 
 nav > ul {
-  display: flex;
+  display: inline-flex;
   justify-content:flex-start;
   align-items: center;
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+nav > ul.pull-right {
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 nav li {
@@ -28,6 +34,10 @@ nav li {
   display: inline;
   margin-right: 20px;
   color: white;
+}
+
+ul.pull-right > li {
+  margin: auto 0 auto 20px;
 }
 
 nav li.active {
@@ -44,17 +54,23 @@ nav a {
 
 .wrapper {
   max-width: 940px;
-  padding: 0 10px 0 10px;
+  padding: 0 10px;
   margin: auto;
 }
 
 form input, form textarea {
   display: block;
   width: 100%;
-  margin: 5px auto 20px auto;
+  margin: 5px auto;
   font-family: inherit;
   font-size: 16px;
   padding: 5px;
+}
+
+label {
+  margin-top: 15px;
+  display: block;
+  font-weight: bold;
 }
 
 button {
@@ -62,7 +78,8 @@ button {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 0 5px 0 5px;
+  padding: 0 5px;
+  margin: 20px auto;
   line-height: 40px;
   font-size: 16px;
   height: 40px;
