@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const questionSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+const questionSchema = new Schema({
   question: String,
   options: [{
     label: String,
@@ -7,7 +8,8 @@ const questionSchema = new mongoose.Schema({
       type: Number,
       default: 0
     }
-  }]
+  }],
+  author: Schema.Types.ObjectId
 });
 const Question = mongoose.model('Question', questionSchema);
 module.exports = Question;

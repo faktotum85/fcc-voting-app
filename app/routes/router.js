@@ -6,6 +6,7 @@ const Question = require('../models/question.js');
 
 module.exports = function(passport) {
   router.get('/', (req, res) => {
+    console.log(req.user);
 
     Question.find().exec((err, questions) => {
       if (err) return res.end();
@@ -69,7 +70,8 @@ module.exports = function(passport) {
         return {
           label: label
         }
-      })
+      }),
+      author: req.user._id
     });
 
     question.save(err => {
