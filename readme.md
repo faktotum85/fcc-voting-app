@@ -3,10 +3,10 @@ todos:
   - chart showing votes so far (US 7)
 
 - finalise user model and authentication (US 1-5, 8)
-  - Include links for signing up / in & out
   - encrypt password
 
-  - limit poll creation to authenticated users (US 5)
+  - associate polls with userId
+
   - add dashboard page for logged in users showing their polls (US 1)
   - add sharing functionality (US 2)
   - show aggregate results on the user dashboard (US 3)

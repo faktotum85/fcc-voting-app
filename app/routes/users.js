@@ -7,7 +7,8 @@ module.exports = function(passport) {
     res.render('signup', {
       page_name: 'signup',
       title: 'Sign up',
-      user: req.user
+      user: req.user,
+      message: req.flash('signupMessage')
     });
   });
 
@@ -20,7 +21,8 @@ module.exports = function(passport) {
     res.render('login', {
       page_name: 'login',
       title: 'Log in',
-      user: req.user
+      user: req.user,
+      message: req.flash('loginMessage')
     });
   });
 

@@ -78,7 +78,6 @@ module.exports = function(passport) {
         return res.sendStatus(500);
       }
     }).then(data => {
-      console.log(data);
       res.redirect('/poll/' + data['_id']);
     });
   });

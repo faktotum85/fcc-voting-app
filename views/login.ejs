@@ -2,6 +2,12 @@
   Log into your account
 </h1>
 
+<span class="message">
+  <% if (message.length > 0) { %>
+    <%= message %>
+  <% } %>
+</span>
+
 <form action="/users/login" method="post">
 
   <label>Username</label>

@@ -4,6 +4,12 @@
 
 <form action="/users/signup" method="post">
 
+  <span class="message">
+    <% if (message.length > 0) { %>
+      <%= message %>
+    <% } %>
+  </span>
+
   <label>Username</label>
   <input type="text" name="username" required>
 
