@@ -12,7 +12,7 @@ module.exports = function (passport) {
       }
       const newUser = new User();
       newUser.username = username;
-      newUser.password = password;
+      newUser.password = newUser.generateHash(password);
       newUser.save((err) => {
         if (err) throw err;
         return done(null, newUser);
@@ -28,7 +28,7 @@ module.exports = function (passport) {
       if (!user) {
         return done(null, false, req.flash('loginMessage', 'Username not found'));
       }
-      if (user.password !== password) {
+      if (!user.validPassword(password)) {
         return done(null, false, req.flash('loginMessage', 'Incorrect password'));
       }
       return done(null, user);

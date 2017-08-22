@@ -3,7 +3,7 @@ todos:
   - chart showing votes so far (US 7)
 
 - finalise user model and authentication (US 1-5, 8)
-  - encrypt password
+  - add flash message for attempt to create a new poll
 
   - associate polls with userId
 
