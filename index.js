@@ -30,9 +30,9 @@ app.use(passport.session());
 app.use(flash());
 
 // ROUTES
-const appRoutes = require('./app/routes/router')(passport);
-const userRoutes = require('./app/routes/users')(passport);
-app.use('/', appRoutes);
+const mainRoutes = require('./app/routes/main.routes')(passport);
+const userRoutes = require('./app/routes/user.routes')(passport);
+app.use('/', mainRoutes);
 app.use('/users/', userRoutes);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/votingapp', {
