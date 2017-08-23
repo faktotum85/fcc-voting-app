@@ -28,6 +28,8 @@ module.exports = function(passport) {
 
   router.post('/api/delete/:pollId', mainCtrl.delete);
 
+  router.param('pollId', mainCtrl.pollById);
+
   return router;
 
 }

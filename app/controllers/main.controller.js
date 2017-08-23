@@ -40,26 +40,11 @@ exports.new = (req, res) => {
 };
 
 exports.poll = (req, res) => {
-  const pollId = req.params.pollId;
-
-  if (!validId(pollId)) {
-    return res.sendStatus(404);
-  }
-
-  Question.findOne({'_id': pollId}).exec((err, poll) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    };
-    if (poll === null) { // no result
-      return res.sendStatus(404);
-    }
-    res.render('single-poll', {
-      page_name: 'singlePoll',
-      title: poll.question,
-      poll: poll,
-      user: req.user
-    });
+  res.render('single-poll', {
+    page_name: 'singlePoll',
+    title: req.poll.question,
+    poll: req.poll,
+    user: req.user
   });
 };
 
@@ -95,16 +80,11 @@ exports.savePoll = (req, res) => {
 };
 
 exports.vote = (req, res) => {
-  const pollId = req.params.pollId;
   const optionId = req.body.option;
-
-  if (!validId(pollId) || !validId(optionId)) {
-    return res.sendStatus(404);
-  }
 
   // Update Poll
   Question.findOneAndUpdate(
-    { "_id": pollId, "options._id": optionId },
+    { "_id": req.poll.id, "options._id": optionId },
     {
         "$inc": {
             "options.$.votes": 1
@@ -118,28 +98,26 @@ exports.vote = (req, res) => {
     }
   );
 
-  res.redirect('/poll/' + pollId);
+  res.redirect('/poll/' + req.poll.id);
 }
 
 exports.delete = (req, res) => {
-  const pollId = req.params.pollId;
-
-  if (!validId(pollId)) {
-    return res.sendStatus(404);
-  }
-
-  // Delete poll
-  Question.remove(
-    { '_id': pollId,
-      'author': req.user._id
-    },
-    (err) => {
-      if (err) {
-        console.error(err)
-        return res.sendStatus(500);
-      }
+  req.poll.remove((err) => {
+    if (err) {
+      return next(err);
     }
-  );
+    res.redirect('/dashboard');
+  });
+};
 
-  res.redirect('/dashboard');
+exports.pollById = (req, res, next, id) => {
+  Question.findOne({
+    _id: id
+  }, (err, poll) => {
+    if (err) {
+      return next(err);
+    }
+    req.poll = poll;
+    next();
+  });
 };

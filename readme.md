@@ -5,7 +5,3 @@
 - finalise user model and authentication (US 1-5, 8)
   - add option to add answer option to a poll (US 8)
   - add sharing functionality (US 2)
-
-
-## OTHER
-- look into properly setting NODE_ENV
