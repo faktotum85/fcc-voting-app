@@ -79,7 +79,7 @@
       })) %>
     );
 
-    var options = {'title':'<%= title %>',
+    var options = {'title': <%- JSON.stringify(title) %>,
                   width: '100%'};
 
     // Instantiate and draw our chart, passing in some options.
