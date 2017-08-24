@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 require('./config/passport')(passport); // pass passport for configuration
 
 app.use(session({
-  secret: 'is safe with me',
+  secret: process.env.SECRET || 'is safe with me',
   saveUninitialized: true,
   resave: true
 }));
