@@ -8,27 +8,33 @@
           <option value="<%= option['_id'] %>">
             <%= option.label %>
           </option>
-          <% }) %>
-          <% if (user) { %>
-            <option value="add" id="addOption">
-              I'd like a custom option
-            </option>
-            <% } %>
-          </select>
-
-          <div id="newOption" hidden>
-            <label >Your custom option:</label>
-            <input id="newOptionInput" name="newOption">
-          </div>
-
-          <button type="submit">Vote now!</button>
-        </form>
-
-        <% if(user && user._id.equals(poll.author._id)) { %>
-          <form action="<%= '/api/delete/' + poll['_id'] %>" method="post">
-            <button class="danger" type="submit" name="delete">Delete this poll</button>
-          </form>
+        <% }) %>
+        <% if (user) { %>
+          <option value="add" id="addOption">
+            I'd like a custom option
+          </option>
         <% } %>
+      </select>
+
+      <div id="newOption" hidden>
+        <label >Your custom option:</label>
+        <input id="newOptionInput" name="newOption">
+      </div>
+
+      <button type="submit">Vote now!</button>
+    </form>
+
+    <a class="btn tweetbtn" href="https://twitter.com/intent/tweet?hashtags=poll&text=<%= encodeURI(poll.question) %>&url=<%= absUrl %>">
+      <i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter
+    </a>
+
+    <% if(user && user._id.equals(poll.author._id)) { %>
+      <form action="<%= '/api/delete/' + poll['_id'] %>" method="post">
+        <button class="danger" type="submit" name="delete">Delete this poll</button>
+      </form>
+    <% } %>
+
+
   </div>
 
   <!--Div that will hold the pie chart-->

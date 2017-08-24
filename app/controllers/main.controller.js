@@ -44,7 +44,8 @@ exports.poll = (req, res) => {
     page_name: 'singlePoll',
     title: req.poll.question,
     poll: req.poll,
-    user: req.user
+    user: req.user,
+    absUrl: req.host + req.url
   });
 };
 

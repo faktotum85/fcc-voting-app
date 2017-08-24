@@ -88,7 +88,7 @@ label {
   font-weight: bold;
 }
 
-button {
+button, .btn {
   background-color: #4B88A2;
   color: white;
   border: none;
@@ -101,7 +101,14 @@ button {
   text-align: center;
   display: block;
   width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
 }
+
+ .tweetbtn {
+   background-color: #4099FF;
+ }
 
 .danger {
   background-color: #CF4D6F;
