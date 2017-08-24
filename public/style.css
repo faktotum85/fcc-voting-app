@@ -125,3 +125,7 @@ button, .btn {
   flex-shrink: 1;
   overflow: hidden;
 }
+
+.message {
+  color: red;
+}
