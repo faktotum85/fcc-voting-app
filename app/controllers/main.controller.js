@@ -82,21 +82,42 @@ exports.savePoll = (req, res) => {
 exports.vote = (req, res) => {
   const optionId = req.body.option;
 
-  // Update Poll
-  Question.findOneAndUpdate(
-    { "_id": req.poll.id, "options._id": optionId },
-    {
-        "$inc": {
-            "options.$.votes": 1
+  if (req.body.option === 'add') {
+    // Push new option
+    Question.findOneAndUpdate(
+      { "_id": req.poll.id },
+      {
+        $push: {
+          options: {
+            label: req.body.newOption,
+            votes: 1
+          }
         }
-    },
-    (err) => {
-      if (err) {
-        console.error(err)
-        return res.sendStatus(500);
+      },
+      (err) => {
+        if (err) {
+          console.error(err)
+          return res.sendStatus(500);
+        }
       }
-    }
-  );
+    );
+  } else {
+    // Update vote count
+    Question.findOneAndUpdate(
+      { "_id": req.poll.id, "options._id": optionId },
+      {
+        "$inc": {
+          "options.$.votes": 1
+        }
+      },
+      (err) => {
+        if (err) {
+          console.error(err)
+          return res.sendStatus(500);
+        }
+      }
+    );
+  }
 
   res.redirect('/poll/' + req.poll.id);
 }
@@ -119,5 +140,5 @@ exports.pollById = (req, res, next, id) => {
     }
     req.poll = poll;
     next();
-  });
+  }).populate('author', '-password');
 };

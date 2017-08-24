@@ -1,25 +1,83 @@
 <h1><%= poll.question %></h1>
-<ul>
-  <% poll.options.forEach(option => { %>
-    <li>
-      <%= option.label %>: <%=option.votes %> vote<% if(option.votes !== 1) { %>s<% } %>
-    </li>
-  <% }) %>
-</ul>
 
-<form action="<%= '/api/vote/' + poll['_id'] %>" method="post">
-  <select name="option">
-    <% poll.options.forEach(option => { %>
-      <option value="<%= option['_id'] %>">
-        <%= option.label %>
-      </option>
-    <% }) %>
-  </select>
-  <button type="submit">Vote now!</button>
-</form>
+<div class="flex-wrapper">
+  <div>
+    <form action="<%= '/api/vote/' + poll['_id'] %>" method="post">
+      <select name="option" id="option">
+        <% poll.options.forEach(option => { %>
+          <option value="<%= option['_id'] %>">
+            <%= option.label %>
+          </option>
+          <% }) %>
+          <% if (user) { %>
+            <option value="add" id="addOption">
+              I'd like a custom option
+            </option>
+            <% } %>
+          </select>
 
-<% if(user && user._id.equals(poll.author)) { %>
-  <form action="<%= '/api/delete/' + poll['_id'] %>" method="post">
-    <button class="danger" type="submit" name="delete">Delete this poll</button>
-  </form>
-<% } %>
+          <div id="newOption" hidden>
+            <label >Your custom option:</label>
+            <input id="newOptionInput" name="newOption">
+          </div>
+
+          <button type="submit">Vote now!</button>
+        </form>
+
+        <% if(user && user._id.equals(poll.author._id)) { %>
+          <form action="<%= '/api/delete/' + poll['_id'] %>" method="post">
+            <button class="danger" type="submit" name="delete">Delete this poll</button>
+          </form>
+        <% } %>
+  </div>
+
+  <!--Div that will hold the pie chart-->
+  <div>
+    <div id="chart_div"></div>
+  </div>
+
+</div>
+
+
+
+<body>
+
+<script src="/js/singlePoll.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+
+  // fix for resizing
+  window.addEventListener('resize', () => {
+    console.log('resizing');
+    drawChart();
+  });
+
+  // Load the Visualization API and the corechart package.
+  google.charts.load('current', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Options');
+    data.addColumn('number', 'Votes');
+    data.addRows(
+      <%- JSON.stringify(poll.options.map((option) => {
+        return [option.label, option.votes]
+      })) %>
+    );
+
+    var options = {'title':'<%= title %>',
+                  width: '100%'};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>

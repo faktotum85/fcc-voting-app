@@ -1,7 +1,2 @@
 # TODOS:
-- build out page template for individual polls
-  - chart showing votes so far (US 7)
-
-- finalise user model and authentication (US 1-5, 8)
-  - add option to add answer option to a poll (US 8)
-  - add sharing functionality (US 2)
+  - add sharing functionality (US 2) // simple button with Twitter icon and appropriate href

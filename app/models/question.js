@@ -9,7 +9,10 @@ const questionSchema = new Schema({
       default: 0
     }
   }],
-  author: Schema.Types.ObjectId
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 const Question = mongoose.model('Question', questionSchema);
 module.exports = Question;

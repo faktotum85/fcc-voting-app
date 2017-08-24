@@ -106,3 +106,15 @@ button {
 .danger {
   background-color: #CF4D6F;
 }
+
+.flex-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-wrapper > div {
+  width: 400px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+}
